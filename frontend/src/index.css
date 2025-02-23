@@ -1,4 +1,3 @@
-/* Base styles and CSS reset */
 * {
   margin: 0;
   padding: 0;
@@ -25,14 +24,12 @@ body {
   line-height: 1.5;
 }
 
-/* Layout */
 .container {
   max-width: 1140px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-/* Authentication Forms */
 .auth-form {
   max-width: 400px;
   margin: 2rem auto;
@@ -42,7 +39,6 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* Dashboard Layout */
 .dashboard {
   display: grid;
   gap: 1.5rem;

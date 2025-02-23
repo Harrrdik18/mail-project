@@ -4,10 +4,8 @@ import { submitResignation, submitExitResponses } from '../controllers/userContr
 
 const router = express.Router()
 
-// Submit resignation request
 router.post('/resign', authenticateToken, submitResignation)
 
-// Submit exit interview responses
 router.post('/responses', authenticateToken, submitExitResponses)
 
 export default router 

@@ -37,11 +37,9 @@ const seedEmployees = async () => {
     await mongoose.connect(process.env.MONGODB_URI)
     console.log('Connected to MongoDB')
 
-    // Clear existing employees (but not admin)
     await User.deleteMany({ role: 'employee' })
     console.log('Cleared existing employees')
 
-    // Create new employees
     for (const employee of employees) {
       const user = new User(employee)
       await user.save()

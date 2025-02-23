@@ -40,7 +40,6 @@ export const concludeResignation = async (req, res) => {
     await resignation.save()
 
     try {
-      // Send email notification
       const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,

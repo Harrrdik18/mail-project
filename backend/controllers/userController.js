@@ -7,14 +7,12 @@ export const submitResignation = async (req, res) => {
     const { lwd } = req.body
     const lastWorkingDate = new Date(lwd)
 
-    // Check if date is weekend
     const dayOfWeek = lastWorkingDate.getDay()
     if (dayOfWeek === 0 || dayOfWeek === 6) {
       return res.status(400).json({ message: 'Last working day cannot be on weekend' })
     }
 
     try {
-      // Check if date is a holiday using Calendarific API
       const year = lastWorkingDate.getFullYear()
       const month = lastWorkingDate.getMonth() + 1
       const day = lastWorkingDate.getDate()

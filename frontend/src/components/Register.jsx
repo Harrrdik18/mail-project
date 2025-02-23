@@ -16,7 +16,6 @@ function Register() {
         password
       })
       
-      // Redirect to login after successful registration
       navigate('/login')
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed')
