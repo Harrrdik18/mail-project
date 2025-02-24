@@ -11,7 +11,7 @@ function Login({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post('https://mail-project.onrender.com/api/auth/login', {
         username,
         password
       })

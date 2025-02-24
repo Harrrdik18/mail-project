@@ -9,6 +9,8 @@ function HRDashboard({ onLogout }) {
   const [success, setSuccess] = useState('')
 
   useEffect(() => {
+    // Set default axios configuration
+    axios.defaults.baseURL = 'https://mail-project.onrender.com'
     fetchResignations()
   }, [])
 
