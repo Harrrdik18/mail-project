@@ -3,9 +3,10 @@ import axios from 'axios'
 const instance = axios.create({
   baseURL: 'https://mail-project.onrender.com',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   },
-  withCredentials: true
+  withCredentials: false
 })
 
 // Add a request interceptor to add the token
@@ -18,6 +19,17 @@ instance.interceptors.request.use(
     return config
   },
   (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// Add response interceptor to handle CORS errors
+instance.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.message === 'Network Error') {
+      console.error('CORS or Network Error:', error)
+    }
     return Promise.reject(error)
   }
 )

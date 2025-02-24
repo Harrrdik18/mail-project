@@ -13,11 +13,16 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: ["http://localhost:5173", "https://your-frontend-domain.com"], // Add your frontend domain
-  credentials: true,
+  origin: '*',  // Allow all origins for now
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  preflightContinue: true,
+  optionsSuccessStatus: 200
 }));
+
+// Add OPTIONS handling for preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 
@@ -44,9 +49,18 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
-    createAdminUser(); // Create admin user after successful connection
+    createAdminUser();
   })
   .catch((err) => console.error("MongoDB connection error:", err));
+
+// Add headers middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 // Routes
 app.use("/api/auth", authRoutes);
