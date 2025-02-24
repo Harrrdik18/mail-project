@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axiosInstance from '../utils/axios'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 
@@ -9,18 +9,12 @@ function HRDashboard({ onLogout }) {
   const [success, setSuccess] = useState('')
 
   useEffect(() => {
-    // Set default axios configuration
-    axios.defaults.baseURL = 'https://mail-project.onrender.com'
     fetchResignations()
   }, [])
 
   const fetchResignations = async () => {
     try {
-      const response = await axios.get('/api/admin/resignations', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
+      const response = await axiosInstance.get('/api/admin/resignations')
       setResignations(response.data.data)
     } catch (err) {
       setError('Failed to fetch resignations')
@@ -29,14 +23,10 @@ function HRDashboard({ onLogout }) {
 
   const handleResignation = async (resignationId, approved, lwd) => {
     try {
-      await axios.put('/api/admin/conclude_resignation', {
+      await axiosInstance.put('/api/admin/conclude_resignation', {
         resignationId,
         approved,
         lwd: lwd?.toISOString().split('T')[0]
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
       })
       setSuccess('Resignation request updated successfully')
       setError('')

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axiosInstance from '../utils/axios'
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('')
@@ -11,7 +11,7 @@ function Login({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('https://mail-project.onrender.com/api/auth/login', {
+      const response = await axiosInstance.post('/api/auth/login', {
         username,
         password
       })

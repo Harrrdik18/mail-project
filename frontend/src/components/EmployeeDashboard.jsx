@@ -1,50 +1,36 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { useState } from 'react'
+import axiosInstance from '../utils/axios'
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css"
 
 function EmployeeDashboard({ onLogout }) {
-  const [lwd, setLwd] = useState(null);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [resignationStatus, setResignationStatus] = useState(null);
-
-  useEffect(() => {
-    axios.defaults.baseURL = "https://mail-project.onrender.com";
-  }, []);
+  const [lwd, setLwd] = useState(null)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [resignationStatus, setResignationStatus] = useState(null)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!lwd) {
-      setError("Please select a last working day");
-      return;
+      setError('Please select a last working day')
+      return
     }
 
     try {
-      const response = await axios.post(
-        "/api/user/resign",
-        { lwd: lwd.toISOString().split("T")[0] },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axiosInstance.post('/api/user/resign', {
+        lwd: lwd.toISOString().split('T')[0]
+      })
 
-      setSuccess("Resignation submitted successfully");
-      setError("");
-      console.log("Resignation response:", response.data);
+      setSuccess('Resignation submitted successfully')
+      setError('')
     } catch (err) {
-      console.error("Resignation error:", err);
-      const errorMessage =
-        err.response?.data?.message ||
-        err.response?.data?.error ||
-        "Failed to submit resignation";
-      setError(errorMessage);
-      setSuccess("");
+      const errorMessage = err.response?.data?.message || 
+                         err.response?.data?.error || 
+                         'Failed to submit resignation'
+      setError(errorMessage)
+      setSuccess('')
     }
-  };
+  }
 
   return (
     <div className="container">

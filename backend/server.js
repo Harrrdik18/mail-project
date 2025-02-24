@@ -12,12 +12,12 @@ dotenv.config();
 const app = express();
 
 // CORS configuration
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Allow requests from Vite dev server
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: ["http://localhost:5173", "https://your-frontend-domain.com"], // Add your frontend domain
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 

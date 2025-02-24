@@ -4,7 +4,8 @@ const instance = axios.create({
   baseURL: 'https://mail-project.onrender.com',
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  withCredentials: true
 })
 
 // Add a request interceptor to add the token
