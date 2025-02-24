@@ -11,18 +11,8 @@ dotenv.config();
 
 const app = express();
 
-// CORS configuration
-app.use(cors({
-  origin: '*',  // Allow all origins for now
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  preflightContinue: true,
-  optionsSuccessStatus: 200
-}));
-
-// Add OPTIONS handling for preflight requests
-app.options('*', cors());
+// Simple CORS configuration
+app.use(cors());
 
 app.use(express.json());
 
@@ -52,15 +42,6 @@ mongoose
     createAdminUser();
   })
   .catch((err) => console.error("MongoDB connection error:", err));
-
-// Add headers middleware
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
 
 // Routes
 app.use("/api/auth", authRoutes);
